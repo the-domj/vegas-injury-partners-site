@@ -4,6 +4,20 @@ import { useEffect, useRef, useState } from "react";
 
 type Message = { role: "user" | "assistant"; content: string };
 
+function renderMessageText(text: string) {
+  // Safety net: even though the system prompt tells the model not to use
+  // markdown, models occasionally slip and use **bold** anyway. Rather than
+  // showing raw asterisks, render them as actual bold text.
+  const parts = text.split(/(\*\*.*?\*\*)/g);
+  return parts.map((part, i) => {
+    const boldMatch = part.match(/^\*\*(.*)\*\*$/);
+    if (boldMatch) {
+      return <strong key={i}>{boldMatch[1]}</strong>;
+    }
+    return part;
+  });
+}
+
 export default function ChatWidget() {
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<
@@ -116,13 +130,13 @@ export default function ChatWidget() {
             {messages.map((m, i) => (
               <div
                 key={i}
-                className={`max-w-[82%] px-3 py-2 rounded-lg text-[13px] leading-snug ${
+                className={`max-w-[82%] px-3 py-2 rounded-lg text-[13px] leading-snug whitespace-pre-wrap ${
                   m.role === "user"
                     ? "self-end bg-ink text-parchment"
                     : "self-start bg-paper border border-line text-ink"
                 }`}
               >
-                {m.text}
+                {renderMessageText(m.text)}
               </div>
             ))}
             {loading && (
