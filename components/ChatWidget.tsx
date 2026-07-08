@@ -106,7 +106,7 @@ export default function ChatWidget() {
 
       {/* Chat panel */}
       {open && (
-        <div className="fixed bottom-6 right-6 z-50 w-[320px] sm:w-[340px] h-[440px] bg-paper rounded-xl border border-line shadow-panel flex flex-col overflow-hidden">
+        <div className="fixed bottom-6 right-6 z-50 w-[92vw] sm:w-[50vw] sm:max-w-[520px] sm:min-w-[380px] h-[75vh] sm:h-[65vh] sm:max-h-[680px] bg-paper rounded-xl border border-line shadow-panel flex flex-col overflow-hidden">
           <div className="bg-ink text-parchment px-4 py-3 flex items-center justify-between">
             <div>
               <div className="text-sm font-semibold">Chat with us</div>
